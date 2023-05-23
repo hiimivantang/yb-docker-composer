@@ -1,0 +1,8 @@
+{# templates/docker_compose.template #}
+
+---
+version: '3'
+services:
+  {% for s services %}
+  {% block service %}{% endblock service %}
+  {% endfor %}
