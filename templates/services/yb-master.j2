@@ -1,0 +1,17 @@
+{% extends "service.j2" %}
+{% set canonical_name = 'yb-master'+'-n%d'%suffix %}
+
+{% block image_name %}yugabytedb/yugabyte{% endblock %}
+
+{% block service_name %}{{ canonical_name }}{% endblock %}
+{% block host_name %}{{ canonical_name }}{% endblock %}
+{% block container_name %}{{ canonical_name }}{% endblock %}
+
+{%set ui_port=7000 %}
+{% block ports %}ports:
+      - {{ ui_port+suffix }}:{{ ui_port }}
+{%- endblock %}
+
+{% block entrypoint -%}
+['/home/yugabyte/bin/yb-master', '--replication_factor={{ rf }}', '--master_addresses={% for i in range(rf) %}yb-master-n{{ loop.index }}:7100{{ "," if not loop.last else "" }}{% endfor %}', '--rpc_bind_addresses={{ canonical_name }}:7100', '--enable_ysql={{ ysql }}', '--fs_data_dirs=/mnt/disk0,/mnt/disk1', '--yb_num_shards_per_tserver=2', '--ysql_num_shards_per_tserver=2', '--v=0']
+{%- endblock %}

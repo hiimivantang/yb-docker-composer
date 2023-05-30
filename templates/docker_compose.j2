@@ -1,0 +1,6 @@
+{# templates/docker_compose.j2 #}
+
+---
+version: '3'
+services:
+{%- for s in services %}{{ s }}{% endfor %}

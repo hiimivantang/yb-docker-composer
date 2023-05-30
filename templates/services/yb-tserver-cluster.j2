@@ -1,0 +1,4 @@
+{% for i in range(rf) %}
+{%- set suffix=loop.index  %}
+{%- include 'yb-tserver.j2' %}
+{%- endfor %}
