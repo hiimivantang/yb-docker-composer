@@ -3,7 +3,7 @@
 
 yb-docker-composer generates docker-compose.yml dynamically based on your inputs. If no inputs are supplied when running yb-docker-composer, a docker-compose.yml for a YugabyteDB cluster with RF of 3 will be generated. 
 
-
+```
 usage: yb-docker-composer.py [-h] [--tag TAG] [--rf RF]
                              [--placement-info PLACEMENT_INFO]
                              [--master-flags MASTER_FLAGS]
@@ -30,10 +30,12 @@ optional arguments:
   --ysql                Enable Postgres compatible YSQL API (Default)
   -o OUTPUT, --output OUTPUT
                         Path to output docker-compose yaml file
+```
 
 
 With --prometheus flag, Yugabyte Grafana dashboard comes imported out-of-the box. Log in Grafana (localhost:3000) with username `admin` and password `admin`.
 <img width="1792" alt="image" src="https://github.com/hiimivantang/yb-docker-composer/assets/4137197/481d6f01-feeb-42f7-8c0b-ed17dadaa8f0">
+
 
 
 
