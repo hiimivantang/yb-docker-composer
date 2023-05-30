@@ -18,6 +18,9 @@ def generate_prometheus_service(args):
 def generate_grafana_service(args):
     return Environment(loader=FileSystemLoader("templates/services/")).get_template("grafana.j2").render(vars(args))
 
+def generate_prometheus_config(args):
+    return Environment(loader=FileSystemLoader("templates/prometheus-config/")).get_template("prometheus.yml.j2").render(vars(args))
+
 # print(template.render(context))
 
 if __name__ == "__main__":
@@ -33,10 +36,7 @@ if __name__ == "__main__":
     parser.add_argument('--prometheus', action='store_true', help='Include Prometheus and Grafana')
 
     parser.add_argument('--no-ysql', dest='ysql', action='store_false', help='Disable Postgres compatible YSQL API')
-    parser.add_argument('--ysql', action='store_true', help='Enable Postgres compatible YSQL API')
-
-    parser.add_argument('--no-ycql', dest='ycql', action='store_false', help='Disable Cassandra compatible YCQL API')
-    parser.add_argument('--ycql', action='store_true', help='Enable Cassandra compatible YCQL API')
+    parser.add_argument('--ysql', action='store_true', help='Enable Postgres compatible YSQL API (Default)')
 
     parser.add_argument('-o', '--output', dest='output', default='./docker-compose.yaml', help='Path to output docker-compose yaml file')
 
@@ -51,6 +51,9 @@ if __name__ == "__main__":
     if args.prometheus:
         services.append(generate_prometheus_service(args))
         services.append(generate_grafana_service(args))
+        prometheus_config = generate_prometheus_config(args) 
+        with open("volumes/prometheus.yml", "w") as fh:
+            fh.write(prometheus_config)
 
     environment = Environment(loader=FileSystemLoader("templates/"))
     template = environment.get_template("docker_compose.j2")
