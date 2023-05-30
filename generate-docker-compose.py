@@ -38,7 +38,7 @@ if __name__ == "__main__":
     parser.add_argument('--no-ycql', dest='ycql', action='store_false', help='Disable Cassandra compatible YCQL API')
     parser.add_argument('--ycql', action='store_true', help='Enable Cassandra compatible YCQL API')
 
-    parser.add_argument('-o', '--output', dest='output', default='test/docker-compose.yaml', help='Path to output docker-compose yaml file')
+    parser.add_argument('-o', '--output', dest='output', default='./docker-compose.yaml', help='Path to output docker-compose yaml file')
 
     args = parser.parse_args()
     print(args)
