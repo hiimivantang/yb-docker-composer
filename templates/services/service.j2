@@ -4,5 +4,6 @@
     hostname: {% block host_name %}{% endblock %}
     container_name: {% block container_name %}{% endblock %}
     privileged: true 
+    {% block volumes %}{% endblock %}
     {% block ports %}{% endblock %}
-    entrypoint: {% block entrypoint %}{% endblock %}
+    {% block entrypoint %}{% endblock %}

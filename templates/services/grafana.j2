@@ -1,17 +1,18 @@
 {% extends "service.j2" %}
-{% set canonical_name = 'prometheus' %}
+{% set canonical_name = 'grafana' %}
 
-{% block image_name %}prom/prometheus{% endblock %}
+{% block image_name %}grafana/grafana{% endblock %}
 
 {% block service_name %}{{ canonical_name }}{% endblock %}
 {% block host_name %}{{ canonical_name }}{% endblock %}
 {% block container_name %}{{ canonical_name }}{% endblock %}
 
 {% block volumes %}volumes:
-      - $PWD/volumes/prometheus.yml:/etc/prometheus/prometheus.yml
+      - $PWD/volumes/provisioning:/etc/grafana/provisioning
+      - $PWD/volumes/dashboards:/var/lib/grafana/dashboards
 {%- endblock %}
 
-{%set ui_port=9090 %}
+{%set ui_port=3000 %}
 {% block ports %}ports:
       - {{ ui_port }}:{{ ui_port }}
 {%- endblock %}
