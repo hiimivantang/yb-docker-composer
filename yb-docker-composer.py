@@ -12,11 +12,11 @@ def generate_yb_master_services(args):
 def generate_yb_tserver_services(args):
     return Environment(loader=FileSystemLoader("templates/services/")).get_template("yb-tserver-cluster.j2").render(vars(args))
 
-def generate_prometheus_context():
-    pass
+def generate_prometheus_service(args):
+    return Environment(loader=FileSystemLoader("templates/services/")).get_template("prometheus.j2").render(vars(args))
 
-def generate_grafana_context():
-    pass
+def generate_grafana_service(args):
+    return Environment(loader=FileSystemLoader("templates/services/")).get_template("grafana.j2").render(vars(args))
 
 # print(template.render(context))
 
@@ -43,12 +43,14 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print(args)
 
-
     #Generate services
     services = []
 
     services.append(generate_yb_master_services(args))
     services.append(generate_yb_tserver_services(args))
+    if args.prometheus:
+        services.append(generate_prometheus_service(args))
+        services.append(generate_grafana_service(args))
 
     environment = Environment(loader=FileSystemLoader("templates/"))
     template = environment.get_template("docker_compose.j2")
@@ -57,7 +59,6 @@ if __name__ == "__main__":
     
     with open(args.output, "w") as fh:
         fh.write(rendered)
-
 
     #template = environment.get_template("yb-master.j2")
     #print(template.render(context))
