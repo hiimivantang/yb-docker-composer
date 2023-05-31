@@ -58,5 +58,6 @@ In addition, as long as you know a bit of Jinja templating syntax, you can easil
 ## TODO
 
 - [ ] Specify yb-master and yb-tserver flags via CLI
+- [ ] sqlpad option
 - [ ] Accompanying sample/demo apps
 - [ ] Kafka brokers and connect workers
