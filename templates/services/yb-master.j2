@@ -7,6 +7,10 @@
 {% block host_name %}{{ canonical_name }}{% endblock %}
 {% block container_name %}{{ canonical_name }}{% endblock %}
 
+{% block volumes %}volumes:
+      - ./{{ canonical_name }}/logs:/mnt/disk0/yb-data/master/logs
+{%- endblock %}
+
 {%set ui_port=7000 %}
 {% block ports %}ports:
       - {{ ui_port+suffix }}:{{ ui_port }}
