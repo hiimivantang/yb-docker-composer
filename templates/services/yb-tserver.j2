@@ -1,25 +1,17 @@
-{% extends "service.j2" %}
-{% set canonical_name = 'yb-tserver'+'-n%d'%suffix %}
+{# services/yb-tserver.j2 #}
 
-{% block image_name %}yugabytedb/yugabyte{% endblock %}
-
-{% block service_name %}{{ canonical_name }}{% endblock %}
-{% block host_name %}{{ canonical_name }}{% endblock %}
-{% block container_name %}{{ canonical_name }}{% endblock %}
-
-{% block volumes %}volumes:
+{%- set ui_port=9000 %}
+{%- set canonical_name = 'yb-tserver'+'-n%d'%suffix %}
+  {{ canonical_name }}:
+    image: yugabytedb/yugabyte:latest
+    hostname: {{ canonical_name }}
+    container_name: {{ canonical_name }}
+    privileged: true
+    volumes:
       - ./{{ canonical_name }}/logs:/mnt/disk0/yb-data/tserver/logs
-{%- endblock %}
-
-{%set ui_port=9000 %}
-{% block ports %}ports:
+    ports:
       - {{ ui_port+suffix }}:{{ ui_port }}
       {%- if suffix==1 and ysql %}
       - 5433:5433
       {%- endif %}
-{%- endblock %}
-
-{% block entrypoint -%}
-entrypoint: ['/home/yugabyte/bin/yb-tserver', '--tserver_master_addrs={% for i in range(rf) %}yb-master-n{{ loop.index }}:7100{{ "," if not loop.last else "" }}{% endfor %}', '--rpc_bind_addresses={{ canonical_name }}:9100', '--memory_limit_hard_bytes=1073741824', '--use_cassandra_authentication=false', '--enable_ysql={{ ysql }}', '--pgsql_proxy_bind_address={{ canonical_name }}:5433', '--fs_data_dirs=/mnt/disk0,/mnt/disk1', '--yb_num_shards_per_tserver=2', '--ysql_num_shards_per_tserver=2', '--v=0']
-
-{%- endblock %}
+    entrypoint: ['/home/yugabyte/bin/yb-tserver', '--tserver_master_addrs={% for i in range(rf) %}yb-master-n{{ loop.index }}:7100{{ "," if not loop.last else "" }}{% endfor %}', '--rpc_bind_addresses={{ canonical_name }}:9100', '--memory_limit_hard_bytes=1073741824', '--use_cassandra_authentication=false', '--enable_ysql={{ ysql }}', '--pgsql_proxy_bind_address={{ canonical_name }}:5433', '--fs_data_dirs=/mnt/disk0,/mnt/disk1', '--yb_num_shards_per_tserver=2', '--ysql_num_shards_per_tserver=2', '--v=0']

@@ -1,17 +1,13 @@
-{% extends "service.j2" %}
-{% set canonical_name = 'prometheus' %}
+{# services/prometheus.j2 #}
 
-{% block image_name %}prom/prometheus{% endblock %}
-
-{% block service_name %}{{ canonical_name }}{% endblock %}
-{% block host_name %}{{ canonical_name }}{% endblock %}
-{% block container_name %}{{ canonical_name }}{% endblock %}
-
-{% block volumes %}volumes:
+{%- set ui_port=9090 %}
+{%- set canonical_name = 'prometheus' %}
+  {{ canonical_name }}:
+    image: prom/prometheus:latest
+    hostname: {{ canonical_name }}
+    container_name: {{ canonical_name }}
+    privileged: true
+    volumes:
       - $PWD/volumes/prometheus.yml:/etc/prometheus/prometheus.yml
-{%- endblock %}
-
-{%set ui_port=9090 %}
-{% block ports %}ports:
+    ports:
       - {{ ui_port }}:{{ ui_port }}
-{%- endblock %}

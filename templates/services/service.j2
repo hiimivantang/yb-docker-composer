@@ -1,6 +1,6 @@
 {# services/service.j2 #}
   {% block service_name %}{% endblock %}: 
-    image: {% block image_name %}{% endblock %}:{{ tag|default("latest",true) }}
+    image: {% block image_name %}{% endblock %}:{% if 'yb-master' in tag or 'yb-tserver' in tag %}{{ tag }}{% else %}latest{% endif %}
     hostname: {% block host_name %}{% endblock %}
     container_name: {% block container_name %}{% endblock %}
     privileged: true 

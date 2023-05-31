@@ -1,18 +1,13 @@
-{% extends "service.j2" %}
-{% set canonical_name = 'grafana' %}
-
-{% block image_name %}grafana/grafana{% endblock %}
-
-{% block service_name %}{{ canonical_name }}{% endblock %}
-{% block host_name %}{{ canonical_name }}{% endblock %}
-{% block container_name %}{{ canonical_name }}{% endblock %}
-
-{% block volumes %}volumes:
+{# services/grafana.j2 #}
+{%- set ui_port=3000 %}
+{%- set canonical_name = 'grafana' %}
+  {{ canonical_name }}:
+    image: grafana/grafana:latest
+    hostname: {{ canonical_name }}
+    container_name: {{ canonical_name }}
+    privileged: true
+    volumes:
       - $PWD/volumes/provisioning:/etc/grafana/provisioning
       - $PWD/volumes/dashboards:/var/lib/grafana/dashboards
-{%- endblock %}
-
-{%set ui_port=3000 %}
-{% block ports %}ports:
+    ports:
       - {{ ui_port }}:{{ ui_port }}
-{%- endblock %}

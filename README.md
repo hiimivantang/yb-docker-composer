@@ -66,5 +66,6 @@ In addition, as long as you know a bit of Jinja templating syntax, you can easil
 
 ## Resources
 
+- https://github.com/sknop/kafka-docker-composer
 - https://github.com/FranckPachot/ybdemo/tree/main/docker/yb-lab
 - https://github.com/srinivasa-vasu/yb-loki-alog
