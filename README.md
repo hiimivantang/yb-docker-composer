@@ -61,3 +61,10 @@ In addition, as long as you know a bit of Jinja templating syntax, you can easil
 - [ ] sqlpad option
 - [ ] Accompanying sample/demo apps
 - [ ] Kafka brokers and connect workers
+
+
+
+## Resources
+
+- https://github.com/FranckPachot/ybdemo/tree/main/docker/yb-lab
+- https://github.com/srinivasa-vasu/yb-loki-alog
