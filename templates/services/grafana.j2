@@ -9,5 +9,6 @@
     volumes:
       - $PWD/volumes/provisioning:/etc/grafana/provisioning
       - $PWD/volumes/dashboards:/var/lib/grafana/dashboards
+      - $PWD/volumes/grafana.ini:/etc/grafana/grafana.ini
     ports:
       - {{ ui_port }}:{{ ui_port }}
